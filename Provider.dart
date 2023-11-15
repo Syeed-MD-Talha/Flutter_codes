@@ -5,14 +5,14 @@ void main() {
   runApp(ProviderExample());
 }
 
-class LeftCount extends ChangeNotifier {
+class LeftCount extends ChangeNotifier { //........... Creating class with  ChangeNotifier............
   int _count = 0;
 
   int get count => _count;
 
   void onChange() {
     _count++;
-    notifyListeners();
+    notifyListeners();   //.........  which works like  SetState(){} ...........
   }
 }
 
@@ -30,12 +30,12 @@ class ProviderExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
+    return MultiProvider(                //.................... MultiProvider.........................
       providers: [
         ChangeNotifierProvider(
           create: (context) => LeftCount(),
         ),
-        ChangeNotifierProvider(
+        ChangeNotifierProvider(             //.............. These are the starting point of Provider.....
           create: (context) => RightCount(),
         )
       ],
@@ -56,7 +56,7 @@ class PageOne extends StatelessWidget {
   Widget build(BuildContext context) {
     print('...talha... $cnt');
     cnt++;
-    final ProviderRight = Provider.of<RightCount>(context, listen: false);
+    final ProviderRight = Provider.of<RightCount>(context, listen: false);   //.........Creating instance.....
     final ProviderLeft = Provider.of<LeftCount>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
@@ -70,16 +70,16 @@ class PageOne extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Consumer<LeftCount>(
+              Consumer<LeftCount>( // ********************** Most Important Part ****************
                 builder: (context, value, child) => Text(
                   //'$ProviderLeft.count',
-                  ProviderLeft.count.toString(),
+                  ProviderLeft.count.toString(),  //................... Provider value....
                   style: TextStyle(fontSize: 60),
                 ),
               ),
               ElevatedButton(
                   onPressed: () {
-                    ProviderLeft.onChange();
+                    ProviderLeft.onChange(); //........... Calling class method...............
                   },
                   child: Icon(Icons.add))
             ],
@@ -90,7 +90,7 @@ class PageOne extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Consumer<RightCount>(
+              Consumer<RightCount>(  // ********************** Most Important Part ****************
                 builder: (context, value, child) => Text(
                   //'$ProviderRight.count',
                   ProviderRight.count.toString(),
